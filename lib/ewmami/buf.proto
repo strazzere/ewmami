@@ -1,0 +1,61 @@
+message FlagContentResponse {
+}
+message ClientDownloadRequest {
+  message ApkInfo {
+    optional string packageName = 1;
+    optional int32 versionCode = 2;
+  }
+  message CertificateChain {
+    message Element {
+      optional bytes certificate = 1;
+      optional bool parsedSuccessfully = 2;
+      optional bytes subject = 3;
+      optional bytes issuer = 4;
+      optional bytes fingerprint = 5;
+      optional int64 expiryTime = 6;
+      optional int64 startTime = 7;
+    }
+    repeated Element element = 1;
+  }
+  message Digests {
+    optional bytes sha256 = 1;
+    optional bytes sha1 = 2;
+    optional bytes md5 = 3;
+  }
+
+  message Resource {
+    optional string url = 1;
+    optional int32 type = 2;
+    optional bytes remoteIp = 3;
+    optional string referrer = 4;
+  }
+  message SignatureInfo {
+    repeated CertificateChain certificateChain = 1;
+    optional bool trusted = 2;
+  }
+  optional string url = 1;
+  optional Digests digests = 2;
+  optional int64 length = 3;
+  repeated Resource resources = 4;
+  optional SignatureInfo signature = 5;
+  optional bool userInitiated = 6;
+  repeated string clientAsn = 8;
+  optional string fileBasename = 9;
+  optional int32 downloadType = 10;
+  optional string locale = 11;
+  optional ApkInfo apkInfo = 12;
+  optional fixed64 androidId = 13;
+}
+message ClientDownloadResponse {
+  message MoreInfo {
+    optional string description = 1;
+    optional string url = 2;
+  }
+  optional int32 verdict = 1;
+  optional MoreInfo moreInfo = 2;
+  optional bytes token = 3;
+}
+message ClientDownloadStatsRequest {
+  optional int32 userDecision = 1;
+  optional bytes token = 2;
+}
