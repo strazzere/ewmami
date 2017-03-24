@@ -12,7 +12,7 @@ OptionParser.new do |opts|
 end.parse!
 
 file=arguments[:source_name]
-if File.exist?(file)
+if !file.nil? and File.exist?(file)
 	options = {
 	  :androidId => 1,
 	  :locale => "en_US"
