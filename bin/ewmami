@@ -1,0 +1,25 @@
+#!/usr/bin/env ruby
+require 'rubygems'
+require 'ewmami'
+require 'optparse'
+
+ARGV << '-h' if ARGV.empty?
+arguments = {}
+OptionParser.new do |opts|
+  opts.banner = "Usage: ewmami [options]"
+
+  opts.on('-f', '--file NAME', 'Source name') { |v| arguments[:source_name] = v }
+end.parse!
+
+file=arguments[:source_name]
+if File.exist?(file)
+	options = {
+	  :androidId => 1,
+	  :locale => "en_US"
+	}
+	api = Ewmami::API.new(options)
+	resp = api.verify_file(file)
+	puts "Verdict: " + resp.verdict.to_s
+else
+	puts "File doesn't exists"
+end
